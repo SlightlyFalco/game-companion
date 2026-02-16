@@ -19,9 +19,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.falco.gamecompanion.ui.theme.GameCompanionTheme
 import com.falco.gamecompanion.domain.models.GameEntity
+import com.falco.gamecompanion.ui.viewmodel.EntityDetailViewModel
 import com.falco.gamecompanion.ui.viewmodel.EntityDetailViewModelFactory
 import com.falco.gamecompanion.domain.models.Quest
 import com.falco.gamecompanion.ui.components.SectionHeader
@@ -161,5 +164,39 @@ private fun EntityDetailContent(
                 )
             }
         }
+    }
+}
+
+private val sampleEntityForDetailPreview = Quest(
+    id = "quest-1",
+    name = "The First Trial",
+    summary = "Prove your worth by defeating the guardian at the old shrine.",
+    sourceLinks = listOf("https://example.com/quests/first-trial"),
+    relatedEntityIds = listOf("item-1", "boss-1"),
+    prerequisites = listOf("Complete the tutorial", "Reach level 5"),
+    steps = listOf(
+        "Travel to the Old Shrine",
+        "Speak to the Guardian",
+        "Defeat the Guardian in combat"
+    ),
+    rewards = listOf("500 gold", "Guardian's Sigil")
+)
+
+private val sampleRelatedNamesForPreview = mapOf(
+    "item-1" to "Guardian's Sigil",
+    "boss-1" to "Shrine Guardian"
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true)
+@Composable
+private fun EntityDetailScreenPreview() {
+    GameCompanionTheme {
+        EntityDetailContent(
+            entity = sampleEntityForDetailPreview,
+            relatedNames = sampleRelatedNamesForPreview,
+            onRelatedClick = {},
+            modifier = Modifier.padding(16.dp)
+        )
     }
 }
